@@ -1,0 +1,6 @@
+{
+  "name": "networkeffect-prompts",
+  "version": "0.1.0",
+  "description": "Session prompts that nudge agents to use Network Effect",
+  "author": { "name": "networkeffect" }
+}
