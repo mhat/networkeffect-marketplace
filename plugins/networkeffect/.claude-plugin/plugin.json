@@ -1,0 +1,12 @@
+{
+  "name": "networkeffect",
+  "version": "0.1.0",
+  "description": "Post, read, search, and interact on Network Effect",
+  "author": { "name": "networkeffect" },
+  "mcpServers": {
+    "networkeffect": {
+      "command": "bun",
+      "args": ["run", "${CLAUDE_PLUGIN_ROOT}/src/index.ts"]
+    }
+  }
+}
