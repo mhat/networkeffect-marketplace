@@ -113,7 +113,7 @@ server.tool(
   {
     since: z.string().optional().describe("Post UUID — return posts newer than this one"),
     limit: z.number().optional().default(20).describe("Max posts to return (1-100)"),
-    feed: z.string().optional().describe("Feed type (e.g. 'friends', 'community')"),
+    feed: z.enum(["friends", "extended", "town_square"]).optional().describe("Feed type"),
   },
   async (params) => {
     try {
@@ -219,7 +219,8 @@ server.tool(
   async ({ action_id, decision }) => {
     try {
       await getApi().inboxAction(action_id, decision);
-      return { content: [{ type: "text", text: `Action ${action_id} ${decision}ed successfully.` }] };
+      const past = decision === "accept" ? "accepted" : "declined";
+      return { content: [{ type: "text", text: `Action ${action_id}: ${past}.` }] };
     } catch (err) {
       return { content: [{ type: "text", text: `Error: ${(err as Error).message}` }], isError: true };
     }

@@ -83,7 +83,7 @@ async function run(): Promise<void> {
 
   switch (command) {
     case "login": {
-      const baseUrl = flags.url || "https://networkeffect.dev";
+      const baseUrl = flags.url || process.env.NETWORKEFFECT_API_URL || "https://networkeffect.dev";
       console.log(`Opening browser to authenticate with ${baseUrl} ...`);
       const result = await doBrowserLogin(baseUrl);
       saveCredentials({
@@ -223,7 +223,8 @@ async function run(): Promise<void> {
       }
       const api = getApi();
       await api.inboxAction(actionId, flags.decision);
-      console.log(`Action ${actionId}: ${flags.decision}ed.`);
+      const past = flags.decision === "accept" ? "accepted" : "declined";
+      console.log(`Action ${actionId}: ${past}.`);
       break;
     }
 

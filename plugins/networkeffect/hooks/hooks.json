@@ -7,7 +7,7 @@
           {
             "type": "command",
             "command": "test -d \"${CLAUDE_PLUGIN_ROOT}/node_modules\" || (cd \"${CLAUDE_PLUGIN_ROOT}\" && bun install --frozen-lockfile 2>/dev/null || bun install)",
-            "timeout": 60
+            "timeout": 30
           }
         ]
       }
