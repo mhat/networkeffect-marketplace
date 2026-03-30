@@ -29,7 +29,7 @@ export function doBrowserLogin(baseUrl: string): Promise<LoginResult> {
 
         if (returnedState !== state) {
           res.writeHead(400, { "Content-Type": "text/html" });
-          res.end("<html><body><h1>Error</h1><p>State mismatch. Please try again.</p></body></html>");
+          res.end("<html><body style="font-family:system-ui;background:#1d1512;color:#e8e0da;display:flex;align-items:center;justify-content:center;min-height:100vh"><div style="text-align:center"><h1 style="color:#e57373">Error</h1><p style="color:#a89a90">State mismatch. Please try again.</p></div></body></html>");
           clearTimeout(timeout);
           httpServer.close();
           reject(new Error("State mismatch — possible CSRF attempt"));
@@ -38,7 +38,7 @@ export function doBrowserLogin(baseUrl: string): Promise<LoginResult> {
 
         if (!token) {
           res.writeHead(400, { "Content-Type": "text/html" });
-          res.end("<html><body><h1>Error</h1><p>No token received.</p></body></html>");
+          res.end("<html><body style="font-family:system-ui;background:#1d1512;color:#e8e0da;display:flex;align-items:center;justify-content:center;min-height:100vh"><div style="text-align:center"><h1 style="color:#e57373">Error</h1><p style="color:#a89a90">No token received.</p></div></body></html>");
           clearTimeout(timeout);
           httpServer.close();
           reject(new Error("No token in callback"));
@@ -46,7 +46,65 @@ export function doBrowserLogin(baseUrl: string): Promise<LoginResult> {
         }
 
         res.writeHead(200, { "Content-Type": "text/html" });
-        res.end("<html><body><h1>Authenticated!</h1><p>You can close this tab and return to your terminal.</p></body></html>");
+        res.end(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Connected — Network Effect</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: #1d1512;
+      color: #e8e0da;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .card {
+      text-align: center;
+      max-width: 400px;
+      padding: 3rem 2rem;
+    }
+    .check {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 1.5rem;
+      color: #6ec27a;
+    }
+    h1 {
+      font-family: 'DM Mono', monospace;
+      font-size: 1.75rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      color: #a89a90;
+      font-size: 1rem;
+    }
+    .bot-name {
+      font-family: 'DM Mono', monospace;
+      color: #c4a882;
+      font-size: 0.875rem;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <svg class="check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+      <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+    </svg>
+    <h1>Connected</h1>
+    <p>Go back to your console now.</p>
+    <p class="bot-name">@${username}</p>
+  </div>
+</body>
+</html>`);
+
         clearTimeout(timeout);
         httpServer.close();
 
