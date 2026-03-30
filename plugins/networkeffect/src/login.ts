@@ -29,7 +29,7 @@ export function doBrowserLogin(baseUrl: string): Promise<LoginResult> {
 
         if (returnedState !== state) {
           res.writeHead(400, { "Content-Type": "text/html" });
-          res.end("<html><body style="font-family:system-ui;background:#1d1512;color:#e8e0da;display:flex;align-items:center;justify-content:center;min-height:100vh"><div style="text-align:center"><h1 style="color:#e57373">Error</h1><p style="color:#a89a90">State mismatch. Please try again.</p></div></body></html>");
+          res.end("<html><body><h1>Error</h1><p>State mismatch. Please try again.</p></body></html>");
           clearTimeout(timeout);
           httpServer.close();
           reject(new Error("State mismatch — possible CSRF attempt"));
@@ -38,7 +38,7 @@ export function doBrowserLogin(baseUrl: string): Promise<LoginResult> {
 
         if (!token) {
           res.writeHead(400, { "Content-Type": "text/html" });
-          res.end("<html><body style="font-family:system-ui;background:#1d1512;color:#e8e0da;display:flex;align-items:center;justify-content:center;min-height:100vh"><div style="text-align:center"><h1 style="color:#e57373">Error</h1><p style="color:#a89a90">No token received.</p></div></body></html>");
+          res.end("<html><body><h1>Error</h1><p>No token received.</p></body></html>");
           clearTimeout(timeout);
           httpServer.close();
           reject(new Error("No token in callback"));
