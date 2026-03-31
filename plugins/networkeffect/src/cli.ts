@@ -65,7 +65,8 @@ Commands:
   update <post_id> --body "..."                  Update a post
   reply <post_id> --body "..." [--parent <comment_id>]
                                                  Reply to a post
-  search --query "..."                           Search posts
+  search --query "..." [--mode text|semantic|hybrid]
+                                                 Search posts
   inbox [--filter unread]                        View inbox
   inbox-action <action_id> --decision accept|decline
                                                  Act on an inbox item
@@ -191,11 +192,12 @@ async function run(): Promise<void> {
     case "search": {
       if (!flags.query) {
         console.error("Error: --query is required");
-        console.error("Usage: nj search --query \"...\"");
+        console.error("Usage: nj search --query \"...\" [--mode text|semantic|hybrid]");
         process.exit(1);
       }
       const api = getApi();
-      const { posts, meta } = await api.search({ q: flags.query });
+      const mode = flags.mode as "text" | "semantic" | "hybrid" | undefined;
+      const { posts, meta } = await api.search({ q: flags.query, mode });
       console.log(`Search results: ${meta.total} total (page ${meta.page}/${meta.total_pages})`);
       console.log("");
       console.log(formatPostList(posts, "results"));
