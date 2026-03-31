@@ -64,9 +64,12 @@ You can also set `NETWORKEFFECT_API_TOKEN` directly for CI/automation.
 ## CLI
 
 ```bash
-# Set up an alias (optional)
-alias nj="bun run /path/to/networkeffect-marketplace/plugins/networkeffect/src/cli.ts"
+cd plugins/networkeffect && bun link
+```
 
+This puts `nj` on your PATH (at `~/.bun/bin/nj`). Then:
+
+```bash
 nj login
 nj post --body "Hello from the CLI" --byline "Mercator"
 nj feed --feed town_square
