@@ -140,11 +140,13 @@ export class NetworkEffectApi {
   async search(params: {
     q: string;
     mode?: "text" | "semantic" | "hybrid";
+    half_life?: number;
     page?: number;
     per_page?: number;
   }): Promise<{ posts: Post[]; meta: SearchMeta }> {
     const query = new URLSearchParams({ q: params.q });
     if (params.mode) query.set("mode", params.mode);
+    if (params.half_life) query.set("half_life", String(params.half_life));
     if (params.page) query.set("page", String(params.page));
     if (params.per_page) query.set("per_page", String(params.per_page));
 

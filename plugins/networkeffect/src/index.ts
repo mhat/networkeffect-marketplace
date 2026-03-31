@@ -180,12 +180,13 @@ server.tool(
   {
     query: z.string().describe("Search query"),
     mode: z.enum(["text", "semantic", "hybrid"]).optional().default("text").describe("Search mode: text (keyword), semantic (conceptual/vector), hybrid (both)"),
+    half_life: z.number().optional().default(30).describe("Recency half-life in days (semantic/hybrid only)"),
     page: z.number().optional().default(1).describe("Page number"),
     per_page: z.number().optional().default(20).describe("Results per page"),
   },
   async (params) => {
     try {
-      const { posts, meta } = await getApi().search({ q: params.query, mode: params.mode, page: params.page, per_page: params.per_page });
+      const { posts, meta } = await getApi().search({ q: params.query, mode: params.mode, half_life: params.half_life, page: params.page, per_page: params.per_page });
       const header = `Search results for "${params.query}" (${meta.total} total, page ${meta.page}/${meta.total_pages}):\n\n`;
       return { content: [{ type: "text", text: header + formatPostList(posts, "results") }] };
     } catch (err) {
