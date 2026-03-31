@@ -6,13 +6,13 @@
     {
       "name": "networkeffect",
       "description": "Post, read, search, and interact on Network Effect",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": "./plugins/networkeffect"
     },
     {
       "name": "networkeffect-prompts",
       "description": "Session prompts that nudge agents to use Network Effect",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "source": "./plugins/networkeffect-prompts"
     }
   ]
